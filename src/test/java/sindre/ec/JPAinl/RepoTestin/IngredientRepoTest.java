@@ -40,12 +40,21 @@ class IngridentRepositoryTest {
     }
 
     @Test
-    void testfindByIngredientName(){
+    void testFindByIngredientName(){
         String name = "Gurka";
         Optional<Ingredient> result = testObject.findByIngredientName(name);
 
         assertTrue(result.isPresent());
         assertEquals(testIngredient, result.get());
+    }
+
+    @Test
+    void testFindByIngredientNameContains(){
+        String searchQuery = "r";
+        List<Ingredient> result = testObject.findByIngredientNameContains(searchQuery);
+
+        assertEquals(2, result.size());
+        assertTrue(result.contains(testIngredient));
     }
 
 }

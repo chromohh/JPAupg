@@ -14,4 +14,7 @@ public interface IngredientRepo extends CrudRepository<Ingredient, Integer> {
 
     Optional<Ingredient> findByIngredientName(String Name);
 
+    @Query("SELECT i FROM Ingredient i WHERE i.ingredientName LIKE %:ingredientName%")
+    List<Ingredient> findByIngredientNameContains(@Param("ingredientName") String Name);
+
 }
