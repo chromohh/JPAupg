@@ -1,4 +1,4 @@
 package sindre.ec.JPAinl.Data;
 
-public class RecipeIngredientRepo {
+public interface RecipeIngredientRepo {
 }
