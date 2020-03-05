@@ -5,12 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.test.context.TestPropertySource;
 import sindre.ec.JPAinl.Data.IngredientRepo;
 import sindre.ec.JPAinl.Entity.Ingredient;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.*;
 
 @DataJpaTest
+@TestPropertySource(locations="classpath:resources.properties")
 class IngridentRepositoryTest {
 
     @Autowired private IngredientRepo testObject;
@@ -18,20 +20,32 @@ class IngridentRepositoryTest {
 
     private List<Ingredient> data ()  {
         return Arrays.asList(new Ingredient ("Paprika"),
-                new Ingredient("Tomat"),
-                new Ingredient("Gurka")
+                new Ingredient("Tomat")
         );
     }
+
+    private Ingredient testIngredient;
 
     @BeforeEach
     void setUp(){
         data().forEach(testObject::save);
+        testIngredient = testObject.save(new Ingredient("Gurka"));
+        em.flush();
     }
 
     @Test
     void injectionsNotNull(){
         assertNotNull(testObject);
         assertNotNull(em);
+    }
+
+    @Test
+    void testfindByIngredientName(){
+        String name = "Gurka";
+        Optional<Ingredient> result = testObject.findByIngredientName(name);
+
+        assertTrue(result.isPresent());
+        assertEquals(testIngredient, result.get());
     }
 
 }
