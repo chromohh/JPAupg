@@ -46,6 +46,7 @@ class IngridentRepositoryTest {
 
         assertTrue(result.isPresent());
         assertEquals(testIngredient, result.get());
+
     }
 
     @Test

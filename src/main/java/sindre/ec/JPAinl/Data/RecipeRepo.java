@@ -15,7 +15,7 @@ public interface RecipeRepo extends CrudRepository<Recipe, Integer> {
     @Query("SELECT r FROM Recipe r WHERE r.recipeName LIKE %:recipeName%")
     List<Recipe> findByRecipeNameContains(@Param("recipeName") String Name);
 
-    List<Recipe> findByRecipeIngredientsIngredientIngredientNameContains(String ingredientName); //Fungerar inte
+    List<Recipe> findByRecipeIngredientsIngredientIngredientNameContains(String ingredientName); //Fungerar inte har testat
 
     List<Recipe> findByRecipeCategoriesCategoryContainsIgnoreCase(String recipeCategory);
 
