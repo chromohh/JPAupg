@@ -1,4 +1,7 @@
 package sindre.ec.JPAinl.Data;
 
-public interface RecipeInstructionRepo {
+import org.springframework.data.repository.CrudRepository;
+import sindre.ec.JPAinl.Entity.RecipeInstruction;
+
+public interface RecipeInstructionRepo extends CrudRepository<RecipeInstruction, String> {
 }

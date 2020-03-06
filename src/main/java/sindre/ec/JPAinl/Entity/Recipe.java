@@ -14,7 +14,7 @@ public class Recipe {
 
     @OneToMany(
             cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},
-            fetch = FetchType.LAZY,
+            fetch = FetchType.EAGER,
             mappedBy = "recipe",
             orphanRemoval=true
     )
@@ -38,6 +38,13 @@ public class Recipe {
     )
     @JoinColumn(name = "instruction_id")
     private RecipeInstruction recipeInstruction;
+
+    public Recipe(String recipeName, List<RecipeIngredient> recipeIngredients, List<RecipeCategory> recipeCategories, RecipeInstruction recipeInstruction) {
+        this.recipeName = recipeName;
+        this.recipeIngredients = recipeIngredients;
+        this.recipeCategories = recipeCategories;
+        this.recipeInstruction = recipeInstruction;
+    }
 
     public Recipe(String recipeName) {
         this.recipeName = recipeName;
