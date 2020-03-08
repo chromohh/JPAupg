@@ -21,14 +21,14 @@ public class RecipeIngredient {
     private Measurement measurement;
 
     @ManyToOne(
-            cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},
-            fetch = FetchType.LAZY
+            cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},
+            fetch = FetchType.EAGER
     )
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
     @ManyToOne(
-            cascade = {CascadeType.DETACH, CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},
+            cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},
             fetch = FetchType.LAZY
     )
     @JoinColumn(name = "recipe_id")
@@ -57,6 +57,14 @@ public class RecipeIngredient {
 
     public Measurement getMeasurement() {
         return measurement;
+    }
+
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     public Ingredient getIngredient() {

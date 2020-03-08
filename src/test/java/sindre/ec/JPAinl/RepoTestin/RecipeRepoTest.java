@@ -26,6 +26,9 @@ public class RecipeRepoTest {
     private List<RecipeCategory> testLRC1;
     private Recipe testRecipe;
 
+    private List<Recipe> data(){
+        return Arrays.asList();
+    }
     @BeforeEach
     void setup(){
         RecipeIngredient common = new RecipeIngredient(new Ingredient("sallad"), 12, Measurement.ST);
@@ -48,6 +51,7 @@ public class RecipeRepoTest {
         List<RecipeCategory> testRC2 = Arrays.asList(category2);
         List<RecipeCategory> testRC3 = Arrays.asList(category1, category2);
 
+
         testLRC1 = testRC1;
 
         testObject.save(new Recipe ("Godis Paj", testRI1, testRC1, new RecipeInstruction("baka Paj")));
@@ -60,6 +64,18 @@ public class RecipeRepoTest {
     void injectionsNotNull(){
         assertNotNull(testObject);
         assertNotNull(em);
+    }
+
+    @Test
+    void testAddUpdateAndDelete(){
+
+        testObject.delete(testRecipe);
+        assertEquals(2,testObject.count());
+        assertFalse(testObject.findById(3).isPresent());
+
+        testObject.save(testRecipe);
+        assertEquals(3,testObject.count());
+        assertTrue(testObject.findById(4).isPresent());
     }
 
     @Test
@@ -93,6 +109,15 @@ public class RecipeRepoTest {
         assertTrue(result.contains(testRecipe));
 
 }
+    @Test
+    void testFindByRecipeCategoryMultipleName(){
+        List<String> searchQuery = Arrays.asList("gott", "äckligt");
+        List<Recipe> result = testObject.findRecipeByCategories(searchQuery);
+
+        assertEquals(2, result.size());
+        assertTrue(result.contains(testRecipe));
+
+    }
 
 
 

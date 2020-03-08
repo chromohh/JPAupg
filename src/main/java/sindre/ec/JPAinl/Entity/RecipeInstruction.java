@@ -20,6 +20,8 @@ public class RecipeInstruction {
         this.recipeInstructions = recipeInstructions;
     }
 
+    RecipeInstruction(){}
+
     public String getRecipeInstructionId() {
         return recipeInstructionId;
     }

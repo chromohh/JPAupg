@@ -13,10 +13,10 @@ public class Recipe {
     private String recipeName;
 
     @OneToMany(
-            cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH},
-            fetch = FetchType.EAGER,
-            mappedBy = "recipe",
-            orphanRemoval=true
+            fetch = FetchType.LAZY,
+            cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.REFRESH,CascadeType.PERSIST},
+            orphanRemoval = true,
+            mappedBy = "recipe"
     )
     private List<RecipeIngredient> recipeIngredients = new ArrayList<>();;
 
@@ -46,8 +46,18 @@ public class Recipe {
         this.recipeInstruction = recipeInstruction;
     }
 
-    public Recipe(String recipeName) {
+    public Recipe(int recipeId, String recipeName, RecipeInstruction recipeInstruction) {
+        this.recipeId = recipeId;
         this.recipeName = recipeName;
+        this.recipeInstruction = recipeInstruction;
+    }
+
+    public Recipe(String recipeName, RecipeInstruction recipeInstruction) {
+        this(0,recipeName,recipeInstruction);
+    }
+
+    public Recipe(String recipeName) {
+        this(0,recipeName,null);
     }
 
     Recipe(){}
@@ -86,6 +96,28 @@ public class Recipe {
 
     public RecipeInstruction getRecipeInstruction() {
         return recipeInstruction;
+    }
+
+    public boolean removeRecipeCategory(RecipeCategory recipeCategory){
+        if (!recipeCategories.contains(recipeCategory)) return false;
+        if (recipeCategory == null) return false;
+        recipeCategory = null;
+        return false;
+    }
+
+    public boolean addRecipeIngredient(RecipeIngredient recipeIngredient){
+        if (recipeIngredient == null) return false;
+        if (recipeIngredient.getRecipe() != null) return false;
+        if (recipeIngredients.contains(recipeIngredient)) return false;
+        recipeIngredient.setRecipe(this);
+        return recipeIngredients.add(recipeIngredient);
+    }
+
+    public boolean removeRecipeIngredient(RecipeIngredient recipeIngredient){
+        if (recipeIngredient == null) return false;
+        if (recipeIngredient.getRecipe() != this) return false;
+        recipeIngredient.setRecipe(null);
+        return recipeIngredients.remove(recipeIngredient);
     }
 
     @Override
