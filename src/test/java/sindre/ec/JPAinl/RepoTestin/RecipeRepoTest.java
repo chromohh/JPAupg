@@ -1,5 +1,6 @@
 package sindre.ec.JPAinl.RepoTestin;
 
+import org.apache.logging.log4j.LogManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import sindre.ec.JPAinl.Data.RecipeRepo;
 import sindre.ec.JPAinl.Entity.*;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.*;
 
